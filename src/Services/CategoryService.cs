@@ -12,12 +12,12 @@ public class CategoryService : ICategoryService
         _categoryRepository = categoryRepository;
     }
 
-    public List<Category> CreateOne(Category category)
+    public IEnumerable<Category> CreateOne(Category category)
     {
         return _categoryRepository.CreateOne(category);
     }
 
-    public List<Category> FindAll()
+    public IEnumerable<Category> FindAll()
     {
         return _categoryRepository.FindAll();
     }

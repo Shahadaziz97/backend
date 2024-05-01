@@ -4,8 +4,8 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Abstractions
 {
     public interface ICategoryService
     {
-        public List<Category> FindAll();
+        public IEnumerable<Category> FindAll();
 
-        public List<Category> CreateOne(Category category);
+        public IEnumerable<Category> CreateOne(Category category);
     }
 }

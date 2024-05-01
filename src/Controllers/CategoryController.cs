@@ -16,7 +16,7 @@ public class CategoryController : BaseController
     }
 
     [HttpGet]
-    public List<Category> FindAll()
+    public IEnumerable<Category> FindAll()
     {
         return _categoryService.FindAll();
     }
@@ -30,7 +30,7 @@ public class CategoryController : BaseController
 
     [HttpPost]
 
-    public List<Category> CreateOne([FromBody] Category category)
+    public IEnumerable<Category> CreateOne([FromBody] Category category)
     {
         return _categoryService.CreateOne(category);
     }

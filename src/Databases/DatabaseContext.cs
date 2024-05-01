@@ -1,23 +1,31 @@
+using Microsoft.EntityFrameworkCore;
 using sda_onsite_2_csharp_backend_teamwork.src.Entities;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.Databases;
 
-public class DatabaseContext
+public class DatabaseContext : DbContext
 {
-    public List<Category> categorys;
-    public List<User> users;
+    public DbSet<Category> categorys { get; set;}
+    public DbSet<User> users { get; set;}
 
-    public DatabaseContext()
+    private IConfiguration _config;
+    public DatabaseContext(IConfiguration config)
     {
-        categorys = [
-            new Category("1","phone"),
-                new Category("2","laptop"),
-                new Category("3","heedPhone")
-        ];
-        users = [
-            new User("shahd Al","hhh@gmail.com","212n12","+966","444444444",""),
-                new User("deem Al","dd@gmail.com","13b1313","+966","777777777",""),
-                new User("mohannad Al","mm@gmail.com","14b1414","+966","8888888888","")
-        ];
+        _config = config;}
+    
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder.UseNpgsql(@$"Host={_config["Db:Host"]};Username={_config["Db:Username"]};password={_config["Db:Password"]};Database={_config["Db:Database"]}");
+
     }
-}
+
+
+
+
+
+
+
+
+
+
+
