@@ -15,9 +15,9 @@ public class DatabaseContext
                 new Category("3","heedPhone")
         ];
         users = [
-            new User("1","shahd Al","hhh@gmail.com","212n12","+966","444444444",""),
-                new User("2","deem Al","dd@gmail.com","13b1313","+966","777777777",""),
-                new User("3","mohannad Al","mm@gmail.com","14b1414","+966","8888888888","")
+            new User("shahd Al","hhh@gmail.com","212n12","+966","444444444",""),
+                new User("deem Al","dd@gmail.com","13b1313","+966","777777777",""),
+                new User("mohannad Al","mm@gmail.com","14b1414","+966","8888888888","")
         ];
     }
 }

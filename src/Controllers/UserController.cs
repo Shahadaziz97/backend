@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
 using sda_onsite_2_csharp_backend_teamwork.src.Databases;
+using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
 using sda_onsite_2_csharp_backend_teamwork.src.Entities;
 using sda_onsite_2_csharp_backend_teamwork.src.Services;
 
@@ -22,15 +23,16 @@ public class UserController : BaseController
     }
 
     [HttpGet]
-    public List<User> FindAll()
+    public List<UserReadDto> FindAll()
     {
         return _userService.FindAll();
     }
 
      [HttpGet("{email}")]
-     public User? FindOne(string email)
+     [ProducesResponseType(StatusCodes.Status200OK)]
+     public ActionResult<UserReadDto?> FindOne(string email)
     {
-        return _userService.FindOneByEmail(email);
+        return Ok(_userService.FindOneByEmail(email));
     }
     
     [HttpPost]
