@@ -1,4 +1,5 @@
 
+using Microsoft.EntityFrameworkCore;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
 using sda_onsite_2_csharp_backend_teamwork.src.Databases;
 using sda_onsite_2_csharp_backend_teamwork.src.Entities;
@@ -9,17 +10,17 @@ public class StockRepository : IStockRepository
 {
 
     private IEnumerable<Stock> _stock;
-    public StockRepository()
+    public StockRepository(DatabaseContext databaseContext)
     {
-        _stock = new DatabaseContext().stock;
+        _stock = databaseContext.Stock;
     }
 
 
-    public IEnumerable<Stock> CreateOne(Stock newProduct)
+    public Stock CreateOne(Stock newProduct)
     {
-        IEnumerable<Stock> newStock = _stock.Append(newProduct);
-        _stock = newStock;
-        return _stock;
+        // var newStock = _stock.Append(newProduct);
+
+        return newProduct;
     }
 
     // public IEnumerable<Stock> EditeOne()
@@ -32,25 +33,25 @@ public class StockRepository : IStockRepository
         return _stock;
     }
 
-    public IEnumerable<Stock> FindByProductId(int productId)
+    public IEnumerable<Stock> FindByProductId(Guid productId)
     {
         // 
         return _stock.Where(item => item.ProductId == productId);
 
     }
-    public Stock? FindById(int id)
+    public Stock? FindById(Guid id)
     {
         // 
         return _stock.FirstOrDefault(item => item.Id == id);
 
     }
 
-    public IEnumerable<Stock> DeletOneById(int id)
+    public IEnumerable<Stock> DeletOneById(Guid id)
     {
         IEnumerable<Stock> filteredStock = _stock.Where(item => item.Id != id);
         return _stock = filteredStock;
     }
-    public IEnumerable<Stock> DeletProductById(int productId)
+    public IEnumerable<Stock> DeletProductById(Guid productId)
     {
         IEnumerable<Stock> filteredStock = _stock.Where(item => item.ProductId != productId);
         return _stock = filteredStock;

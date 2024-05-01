@@ -13,7 +13,7 @@ public class StockService : IStockService
         _stockRepository = stockRepository;
     }
 
-    public IEnumerable<Stock> CreateOne(Stock newProduct)
+    public Stock CreateOne(Stock newProduct)
     {
 
         return _stockRepository.CreateOne(newProduct);
@@ -29,25 +29,25 @@ public class StockService : IStockService
         return _stockRepository.FindAll();
     }
 
-    public IEnumerable<Stock> FindByProductId(int productId)
+    public IEnumerable<Stock> FindByProductId(Guid productId)
     {
         // 
         return _stockRepository.FindByProductId(productId);
 
     }
-    public Stock? FindById(int id)
+    public Stock? FindById(Guid id)
     {
         // 
         return _stockRepository.FindById(id);
 
     }
 
-    public IEnumerable<Stock> DeletOneById(int id)
+    public IEnumerable<Stock> DeletOneById(Guid id)
     {
 
         return _stockRepository.DeletOneById(id);
     }
-    public IEnumerable<Stock> DeletProductById(int productId)
+    public IEnumerable<Stock> DeletProductById(Guid productId)
     {
         return _stockRepository.DeletProductById(productId);
     }
