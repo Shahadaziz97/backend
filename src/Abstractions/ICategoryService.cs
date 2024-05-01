@@ -1,14 +1,11 @@
 using sda_onsite_2_csharp_backend_teamwork.src.Entities;
 
-namespace sda_onsit_2_csharp_backend_teamwork.src.Abstractions
+namespace sda_onsite_2_csharp_backend_teamwork.src.Abstractions
 {
     public interface ICategoryService
     {
-    public List<Category> FindAll();
+        public List<Category> FindAll();
 
-    public List<Category> CreateOne(Category category);
-
-
-        
+        public List<Category> CreateOne(Category category);
     }
 }

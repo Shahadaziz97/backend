@@ -4,13 +4,13 @@ using sda_onsite_2_csharp_backend_teamwork.src.Entities;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.Repositories;
 
-    public class CategoryRepository : ICategoryRepository
-    {
+public class CategoryRepository : ICategoryRepository
+{
     private List<Category> _categorys;
 
     public CategoryRepository()
     {
-      _categorys = new DatabaseContext().categorys;
+        _categorys = new DatabaseContext().categorys;
     }
 
     public List<Category> FindAll()
@@ -23,5 +23,4 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repositories;
         _categorys.Add(category);
         return _categorys;
     }
-
 }
