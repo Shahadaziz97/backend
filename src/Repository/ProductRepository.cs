@@ -11,7 +11,7 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repository
         private DbSet<Product> _products;
         public ProductRepository(DatabaseContext databaseContext)
         {
-            _products = databaseContext.Products;
+            _products = databaseContext.Product;
         }
 
 

@@ -8,7 +8,7 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.DataBase
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Product> Product { get; set; }
         private IConfiguration _config;
 
         public DatabaseContext(IConfiguration config)
