@@ -12,18 +12,18 @@ namespace Backend.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Stock",
+                name: "stock",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    StockQuantity = table.Column<int>(type: "integer", nullable: false),
-                    Price = table.Column<int>(type: "integer", nullable: false),
-                    Color = table.Column<string>(type: "text", nullable: false),
-                    Size = table.Column<char>(type: "character(1)", nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    stockquantity = table.Column<int>(type: "integer", nullable: false),
+                    price = table.Column<int>(type: "integer", nullable: false),
+                    color = table.Column<string>(type: "text", nullable: false),
+                    size = table.Column<char>(type: "character(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stock", x => x.Id);
+                    table.PrimaryKey("pk_stock", x => x.id);
                 });
         }
 
@@ -31,7 +31,7 @@ namespace Backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Stock");
+                name: "stock");
         }
     }
 }

@@ -8,8 +8,14 @@ public class DatabaseContext : DbContext
 {
 
     public DbSet<Stock> Stock { get; set; }
+    private IConfiguration _config;
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;password=Ma_ria111;Database=ecommerce");
+    public DatabaseContext(IConfiguration config)
+    {
+        _config = config;
+    }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+     => optionsBuilder.UseNpgsql(@$"Host={_config["Db:Host"]};Username={_config["Db:Username"]};Password={_config["Db:Password"]};Database={_config["Db:Database"]}").UseSnakeCaseNamingConvention().UseLowerCaseNamingConvention();
 
 
     // Guid ID = Guid.NewGuid();

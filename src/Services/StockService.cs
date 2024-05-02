@@ -1,22 +1,30 @@
 
+using AutoMapper;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
+using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
 using sda_onsite_2_csharp_backend_teamwork.src.Entities;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.Services;
 
 public class StockService : IStockService
 {
-
     private IStockRepository _stockRepository;
-    public StockService(IStockRepository stockRepository)
+    private IMapper _mapper;
+
+    public StockService(IStockRepository stockRepository, IMapper mapper)
     {
         _stockRepository = stockRepository;
+        _mapper = mapper;
+
     }
 
-    public Stock CreateOne(Stock newProduct)
+    public Stock CreateOne(StockCreatDto newCreatStock)
     {
 
-        return _stockRepository.CreateOne(newProduct);
+        Stock newStock = _mapper.Map<Stock>(newCreatStock);
+
+
+        return _stockRepository.CreateOne(newStock);
     }
 
     // public IEnumerable<Stock> EditeOne()
@@ -42,12 +50,12 @@ public class StockService : IStockService
 
     }
 
-    public IEnumerable<Stock> DeletOneById(Guid id)
+    public bool DeletOneById(Guid id)
     {
 
         return _stockRepository.DeletOneById(id);
     }
-    public IEnumerable<Stock> DeletProductById(Guid productId)
+    public bool DeletProductById(Guid productId)
     {
         return _stockRepository.DeletProductById(productId);
     }

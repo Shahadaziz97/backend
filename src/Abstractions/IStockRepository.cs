@@ -12,8 +12,8 @@ public interface IStockRepository
     public IEnumerable<Stock> FindByProductId(Guid productId);
     public Stock? FindById(Guid id);
     public Stock CreateOne(Stock newProduct);
-    public IEnumerable<Stock> DeletOneById(Guid id);
-    public IEnumerable<Stock> DeletProductById(Guid productId);
+    public bool DeletOneById(Guid id);
+    public bool DeletProductById(Guid productId);
     // public IEnumerable<Stock> EditQuantity(int id);
     // public IEnumerable<Stock> EditeOne();
 

@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Mvc;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
+using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
 using sda_onsite_2_csharp_backend_teamwork.src.Entities;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.Controllers;
@@ -26,12 +27,13 @@ public class StockController : BaseController
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ActionResult<Stock> CreateOne(Stock newProduct)
+    public ActionResult<Stock> CreateOne(StockCreatDto newStock)
     {
-        if (newProduct is not null)
+        if (newStock is not null)
         {
-            _stockService.CreateOne(newProduct);
-            return CreatedAtAction(nameof(CreateOne), newProduct);
+
+            _stockService.CreateOne(newStock);
+            return CreatedAtAction(nameof(CreateOne), newStock);
 
         }
 
@@ -42,9 +44,17 @@ public class StockController : BaseController
     // stocks/{id}
     [HttpGet("products/{productId}")]
 
-    public IEnumerable<Stock> FindByProductId(Guid productId)
+    public ActionResult<IEnumerable<Stock>> FindByProductId(Guid productId)
     {
-        return _stockService.FindByProductId(productId);
+        // return _stockService.FindByProductId(productId);
+
+        var stockProduct = _stockService.FindByProductId(productId);
+
+        if (stockProduct is null)
+        {
+            return NotFound();
+        }
+        return Ok(stockProduct);
     }
 
     [HttpGet("{id}")]

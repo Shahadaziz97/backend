@@ -26,24 +26,30 @@ namespace Backend.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("Color")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("color");
 
                     b.Property<int>("Price")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("price");
 
                     b.Property<char>("Size")
-                        .HasColumnType("character(1)");
+                        .HasColumnType("character(1)")
+                        .HasColumnName("size");
 
                     b.Property<int>("StockQuantity")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("stockquantity");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_stock");
 
-                    b.ToTable("Stock");
+                    b.ToTable("stock", (string)null);
                 });
 #pragma warning restore 612, 618
         }
