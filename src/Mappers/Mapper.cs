@@ -2,6 +2,7 @@
 
 using AutoMapper;
 using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
+using sda_onsite_2_csharp_backend_teamwork.src.Entities;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.Mappers
 {
@@ -9,8 +10,12 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Mappers
     {
         public Mapper()
         {
-            CreateMap<Product , PoductReadDTO>();
-            CreateMap<PoductReadDTO ,Product >();
+            CreateMap<Stock, StockCreatDto>();
+            CreateMap<StockCreatDto, Stock>();
+
+
+            CreateMap<Product, PoductReadDTO>();
+            CreateMap<PoductReadDTO, Product>();
         }
     }
 }
