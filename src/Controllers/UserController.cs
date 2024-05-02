@@ -17,7 +17,9 @@ public class UserController : BaseController
     }
 
     [HttpPatch("{email}")]
-    public User? UpdateOne(string email ,[FromBody] User user)
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public UserReadDto? UpdateOne(string email, [FromBody] UserReadDto user)
     {
         return _userService.UpdateOne(email, user);
     }
@@ -28,25 +30,25 @@ public class UserController : BaseController
         return _userService.FindAll();
     }
 
-     [HttpGet("{email}")]
-     [ProducesResponseType(StatusCodes.Status200OK)]
-     public ActionResult<UserReadDto?> FindOne(string email)
+    [HttpGet("{email}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<UserReadDto?> FindOne(string email)
     {
         return Ok(_userService.FindOneByEmail(email));
     }
-    
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-    public ActionResult<User> CreateOne([FromBody] User user)
+    public ActionResult<UserReadDto> CreateOne([FromBody] UserCreateDto user)
     {
-        if(user is not null)
+        if (user is not null)
         {
-          var createdUser =  _userService.CreateOne(user);
-          return CreatedAtAction(nameof(CreateOne), createdUser);
+            var createdUser = _userService.CreateOne(user);
+            return CreatedAtAction(nameof(CreateOne), createdUser);
         }
         return BadRequest();
-      
+
     }
 }

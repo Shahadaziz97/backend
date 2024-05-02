@@ -5,13 +5,16 @@ using sda_onsite_2_csharp_backend_teamwork.src.Entities;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.Repositories;
 
-    public class CategoryRepository : ICategoryRepository
-    {
+public class CategoryRepository : ICategoryRepository
+{
     private DbSet<Category> _categorys;
+    private DatabaseContext _databaseContext;
 
     public CategoryRepository(DatabaseContext databaseContext)
     {
-      _categorys = databaseContext.categorys;
+        //   _categorys = _databaseContext.Category;
+        _databaseContext = databaseContext;
+        _categorys = databaseContext.Category;
     }
 
     public IEnumerable<Category> FindAll()
@@ -19,9 +22,10 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repositories;
         return _categorys;
     }
 
-    public IEnumerable<Category> CreateOne(Category category)
+    public Category CreateOne(Category category)
     {
         _categorys.Add(category);
-        return _categorys;
+        _databaseContext.SaveChanges();
+        return category;
     }
 }

@@ -1,5 +1,3 @@
-
-
 using System.Security.Cryptography;
 using System.Text;
 
@@ -10,7 +8,7 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Utils
         public static void HashPassword(string plainPassword, out string hashedPassword, byte[] pepper)
         {
             var algo = new HMACSHA256(pepper);
-            var passToByte = Encoding. UTF8.GetBytes(plainPassword);
+            var passToByte = Encoding.UTF8.GetBytes(plainPassword);
 
             hashedPassword = BitConverter.ToString(algo.ComputeHash(passToByte));
         }
@@ -18,6 +16,6 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Utils
         {
             HashPassword(plainPassword, out string hashToCompare, pepper);
             return hashToCompare == hashedPassword;
-        } 
+        }
     }
 }

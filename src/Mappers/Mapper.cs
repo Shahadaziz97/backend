@@ -3,11 +3,15 @@ using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
 using sda_onsite_2_csharp_backend_teamwork.src.Entities;
 namespace sda_onsite_2_csharp_backend_teamwork.src.Mappers
 {
-    public class MapperProfile : Profile
+    public class Mapper : Profile
     {
-        public MapperProfile(){
+        public Mapper()
+        {
             CreateMap<User, UserReadDto>();
             CreateMap<UserReadDto, User>();
+            CreateMap<UserCreateDto, User>();
+            CreateMap<CategoryCreateDto, Category>();
+            CreateMap<Category, CategoryCreateDto>();
         }
     }
 }

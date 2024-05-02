@@ -19,61 +19,62 @@ public class UserService : IUserService
     public UserService(IUserRepository userRepository, IConfiguration config, IMapper mapper)
     {
         _userRepository = userRepository;
-        _config = config;  
+        _config = config;
         _mapper = mapper;
     }
 
-    public User? CreateOne(User user)
+    public UserReadDto? CreateOne(UserCreateDto user)
     {
         User? foundUser = _userRepository.FindOneByEmail(user.Email);
-        
-        if(foundUser is not null)
+
+        if (foundUser is not null)
         {
-           return null; 
+            return null;
         }
-        byte[] pepper = Encoding.UTF8.GetBytes( _config["Jwt:Pepper"]!);
+        byte[] pepper = Encoding.UTF8.GetBytes(_config["Jwt:Pepper"]!);
 
         PasswordUtils.HashPassword(user.Password, out string hashedPassword, pepper);
 
         user.Password = hashedPassword;
-        return _userRepository.CreateOne(user);
+        User mappedUser = _mapper.Map<User>(user);
+        var newUser = _userRepository.CreateOne(mappedUser);
+        UserReadDto userRead = _mapper.Map<UserReadDto>(newUser);
+
+        return userRead;
     }
 
     public List<UserReadDto> FindAll()
-    { 
+    {
         var users = _userRepository.FindAll();
         var userRead = users.Select(_mapper.Map<UserReadDto>);
         return userRead.ToList();
     }
 
-
     public UserReadDto? FindOneByEmail(string email)
     {
         var user = _userRepository.FindOneByEmail(email);
         UserReadDto? userRead = _mapper.Map<UserReadDto>(user);
-        return userRead; 
+        return userRead;
     }
 
-    public User? UpdateOne(string email, User newValue)
+    public UserReadDto? UpdateOne(string email, UserReadDto newValue)
     {
         User? user = _userRepository.FindOneByEmail(email);
-        if(user is not null)
+        if (user is not null)
         {
-            user.FullName = newValue.FullName;
-            _userRepository.UpdateOne(user);
+            UserReadDto userRead = _mapper.Map<UserReadDto>(user);
+            userRead.FullName = newValue.FullName;
+            userRead.Phone = newValue.Phone;
+            userRead.CountryCode = newValue.CountryCode;
+            User userupdated = _mapper.Map<User>(userRead);
+
+            var uee = _userRepository.UpdateOne(userupdated);
+            var userupdat = _mapper.Map<UserReadDto>(uee);
+
+            return userupdat;
         }
         return null;
-
     }
-
-
-
-
-
-
-
-
-
 
     // [HttpGet("{userId}")]
     //     public User? FindOne(string userId)
@@ -101,8 +102,4 @@ public class UserService : IUserService
     //         return _userRepository.DeleteOne(userId);
     //     }
     // }
-
-
-
-
 }
