@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
 using sda_onsite_2_csharp_backend_teamwork.src.DataBase;
+using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.Controllers
 {
@@ -23,17 +24,16 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Controllers
         [HttpGet]
         public IEnumerable<Product> FindAll()
         {
-            return _productSarvice.findAll();
+            return _productSarvice.FindAll();
         }
 
         [HttpGet("{id}")]
-        public Product FindeOne(int id)
+        public Product FindeOne(Guid id)
         {
-
             return _productSarvice.FindeOne(id);
         }
         [HttpPost]
-        public ActionResult<IEnumerable<Product>> CreateOne([FromBody] Product product)
+        public ActionResult<Product> CreateOne([FromBody] PoductReadDTO product)
         {
             if (product is not null)
             {

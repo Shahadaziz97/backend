@@ -9,6 +9,10 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.DataBase
     public class DatabaseContext : DbContext
     {
         public DbSet<Product> Product { get; set; }
+        // public DbSet<Stock> Stock { get; set; }
+        // public DbSet<User> User { get; set; }
+        // public DbSet<Category> Category { get; set; }
+
         private IConfiguration _config;
 
         public DatabaseContext(IConfiguration config)
@@ -17,7 +21,7 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.DataBase
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(@$"Host={_config["Db:Host"]};Username={_config["Db:Username"]};password=0562341211;Database={_config["Db:Database"]}");
+        => optionsBuilder.UseNpgsql(@$"Host={_config["Db:Host"]};Username={_config["Db:Username"]};Password={_config["Db:Password"]};Database={_config["Db:Database"]}");
 
         // public DatabaseContext()
         // {

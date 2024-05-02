@@ -9,19 +9,22 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repository
     {
 
         private DbSet<Product> _products;
+        private DatabaseContext _databaseContext;
         public ProductRepository(DatabaseContext databaseContext)
         {
-            _products = databaseContext.Product;
+            _databaseContext = databaseContext;
+            _products = _databaseContext.Product;
+
         }
 
 
-        public IEnumerable<Product> findAll()
+        public IEnumerable<Product> FindAll()
         {
             return _products;
         }
 
 
-        public Product? FindeOne(int Id)
+        public Product? FindeOne(Guid Id)
         {
             Product? product = _products.FirstOrDefault(product => product.Id == Id);
             if (product != null)
@@ -31,10 +34,11 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repository
             return null;
 
         }
-        public IEnumerable<Product> CreateOne(Product product)
+        public Product CreateOne(Product product)
         {
             _products.Add(product);
-            return _products;
+            _databaseContext.SaveChanges();
+            return product;
         }
 
 
