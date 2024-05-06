@@ -17,6 +17,7 @@ public class DatabaseContext : DbContext
     public DbSet<Stock> Stock { get; set; }
     public DbSet<Product> Product { get; set; }
     public DbSet<Order> Order { get; set; }
+    public DbSet<Payment> Payments { get; set; }
 
     public DatabaseContext(IConfiguration config)
     {

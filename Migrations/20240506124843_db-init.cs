@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -11,6 +12,23 @@ namespace Backend.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "address",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    userid = table.Column<Guid>(type: "uuid", nullable: false),
+                    country = table.Column<string>(type: "text", nullable: false),
+                    city = table.Column<string>(type: "text", nullable: false),
+                    streetname = table.Column<string>(type: "text", nullable: false),
+                    postalcode = table.Column<int>(type: "integer", nullable: false),
+                    zipcode = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_address", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "category",
                 columns: table => new
@@ -85,16 +103,52 @@ namespace Backend.Migrations
                 {
                     table.PrimaryKey("pk_user", x => x.id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "payments",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    paymentdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
+                    paymentmethod = table.Column<string>(type: "text", nullable: false),
+                    transactionid = table.Column<string>(type: "text", nullable: false),
+                    userid = table.Column<int>(type: "integer", nullable: false),
+                    userid1 = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_payments", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_payments_user_userid1",
+                        column: x => x.userid1,
+                        principalTable: "user",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_payments_userid1",
+                table: "payments",
+                column: "userid1");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "address");
+
+            migrationBuilder.DropTable(
                 name: "category");
 
             migrationBuilder.DropTable(
                 name: "order");
+
+            migrationBuilder.DropTable(
+                name: "payments");
 
             migrationBuilder.DropTable(
                 name: "product");

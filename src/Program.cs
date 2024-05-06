@@ -43,6 +43,9 @@ builder.Services.AddScoped<IAddressRepoistory, AddressRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+
 var app = builder.Build();
 app.MapControllers();
 

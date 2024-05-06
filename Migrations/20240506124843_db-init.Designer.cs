@@ -12,7 +12,7 @@ using sda_onsite_2_csharp_backend_teamwork.src.Databases;
 namespace Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240504160650_db-init")]
+    [Migration("20240506124843_db-init")]
     partial class dbinit
     {
         /// <inheritdoc />
@@ -24,6 +24,94 @@ namespace Backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Hanan_csharp_backend_teamwork.src.Entities.Address", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("city");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("country");
+
+                    b.Property<int>("PostalCode")
+                        .HasColumnType("integer")
+                        .HasColumnName("postalcode");
+
+                    b.Property<string>("StreetName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("streetname");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("userid");
+
+                    b.Property<int>("ZipCode")
+                        .HasColumnType("integer")
+                        .HasColumnName("zipcode");
+
+                    b.HasKey("Id")
+                        .HasName("pk_address");
+
+                    b.ToTable("address", (string)null);
+                });
+
+            modelBuilder.Entity("Hanan_csharp_backend_teamwork.src.Entities.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric")
+                        .HasColumnName("amount");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("paymentdate");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("paymentmethod");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<string>("TransactionId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("transactionid");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("userid");
+
+                    b.Property<Guid>("UserId1")
+                        .HasColumnType("uuid")
+                        .HasColumnName("userid1");
+
+                    b.HasKey("Id")
+                        .HasName("pk_payments");
+
+                    b.HasIndex("UserId1")
+                        .HasDatabaseName("ix_payments_userid1");
+
+                    b.ToTable("payments", (string)null);
+                });
 
             modelBuilder.Entity("sda_onsite_2_csharp_backend_teamwork.src.Entities.Category", b =>
                 {
@@ -179,6 +267,18 @@ namespace Backend.Migrations
                         .HasName("pk_product");
 
                     b.ToTable("product", (string)null);
+                });
+
+            modelBuilder.Entity("Hanan_csharp_backend_teamwork.src.Entities.Payment", b =>
+                {
+                    b.HasOne("sda_onsite_2_csharp_backend_teamwork.src.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_payments_user_userid1");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
