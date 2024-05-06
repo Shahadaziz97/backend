@@ -10,8 +10,11 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Mappers
     {
         public Mapper()
         {
-            CreateMap<Stock, StockCreatDto>();
-            CreateMap<StockCreatDto, Stock>();
+            CreateMap<Stock, StockCreateDto>();
+            CreateMap<StockCreateDto, Stock>();
+
+            CreateMap<Order, OrderCreateDTO>();
+            CreateMap<OrderCreateDTO, Order>();
 
 
             CreateMap<Product, PoductReadDTO>();

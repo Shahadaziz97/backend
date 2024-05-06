@@ -14,6 +14,8 @@ public class DatabaseContext : DbContext
     public DbSet<User> User { get; set; }
     public DbSet<Stock> Stock { get; set; }
     public DbSet<Product> Product { get; set; }
+    public DbSet<Order> Order { get; set; }
+
     public DatabaseContext(IConfiguration config)
     {
         _config = config;

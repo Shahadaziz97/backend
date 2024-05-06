@@ -1,5 +1,3 @@
-
-using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Mvc;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
 using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
@@ -18,6 +16,7 @@ public class StockController : BaseController
     }
 
     [HttpGet]
+
     public IEnumerable<Stock> FindAll()
     {
         return _stockService.FindAll();
@@ -27,22 +26,22 @@ public class StockController : BaseController
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ActionResult<Stock> CreateOne(StockCreatDto newStock)
+    public ActionResult<Stock> CreateOne(StockCreateDto newStock)
     {
-        if (newStock is not null)
+        if (newStock is null)
         {
-
-            _stockService.CreateOne(newStock);
-            return CreatedAtAction(nameof(CreateOne), newStock);
-
+            return BadRequest();
         }
-
-        return BadRequest();
+        _stockService.CreateOne(newStock);
+        return CreatedAtAction(nameof(CreateOne), newStock);
     }
 
     // stocks/{pId}
     // stocks/{id}
     [HttpGet("products/{productId}")]
+
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
 
     public ActionResult<IEnumerable<Stock>> FindByProductId(Guid productId)
     {
@@ -58,6 +57,8 @@ public class StockController : BaseController
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
     public ActionResult<Stock> FindById(Guid id)
     {
         var stock = _stockService.FindById(id);
@@ -70,21 +71,22 @@ public class StockController : BaseController
     }
 
     [HttpDelete("{id}")]
-    public ActionResult DeletOneById(Guid id)
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+
+    public ActionResult DeleteOneById(Guid id)
     {
-        _stockService.DeletOneById(id);
+        _stockService.DeleteOneById(id);
         return NoContent();
     }
+
+
     [HttpDelete("products/{productId}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
 
-    public ActionResult DeletProductById(Guid productId)
+    public ActionResult DeleteProductById(Guid productId)
     {
-        _stockService.DeletProductById(productId);
+        _stockService.DeleteProductById(productId);
         return NoContent();
     }
-
-
-
-
 
 }

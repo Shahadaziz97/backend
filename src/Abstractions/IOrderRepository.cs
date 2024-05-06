@@ -6,14 +6,14 @@ using sda_onsite_2_csharp_backend_teamwork.src.Entities;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
 
-public interface IStockRepository
+public interface IOrderRepository
 {
-    public IEnumerable<Stock> FindAll();
-    public IEnumerable<Stock> FindByProductId(Guid productId);
-    public Stock? FindById(Guid id);
-    public Stock CreateOne(Stock newProduct);
-    public bool DeleteOneById(Guid id);
-    public bool DeleteProductById(Guid productId);
+    public IEnumerable<Order> FindAll();
+    public IEnumerable<Order> FindByUserId(Guid userId);
+    public Order? FindById(Guid id);
+    public Order CreateOne(Order newOrder);
+    public void DeleteOneById(Order id);
+    public void DeleteOrderByUserId(Guid userId);
     // public IEnumerable<Stock> EditQuantity(int id);
     // public IEnumerable<Stock> EditeOne();
 
