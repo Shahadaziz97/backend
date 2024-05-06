@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
+using sda_onsite_2_csharp_backend_teamwork.src.Databases;
 using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.Controllers
 {
-    [ApiController]
-    [Route("api/v1/[controller]s")]
-    public class ProductController : ControllerBase
+
+    public class ProductController : BaseController
     {
         private IProductService _productSarvice;
         public ProductController(IProductService productSarvice)
@@ -27,11 +27,15 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Controllers
         }
 
         [HttpGet("{id}")]
-        public Product FindeOne(Guid id)
+        public ActionResult<Product> FindeOne(Guid id)
         {
-            return _productSarvice.FindeOne(id);
+            Product? findId = _productSarvice.FindeOne(id);
+            if (findId is null) return NotFound();
+            return findId;
+
         }
         [HttpPost]
+
         public ActionResult<Product> CreateOne([FromBody] PoductReadDTO product)
         {
             if (product is not null)

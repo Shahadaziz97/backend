@@ -1,9 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace sda_onsite_2_csharp_backend_teamwork.src.DTOs;
 
 public class UserReadDto
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public string FullName { get; set; }
+    [Required, EmailAddress]
+
     public string Email { get; set; }
     public string CountryCode { get; set; }
     public string Phone { get; set; }
@@ -12,6 +16,8 @@ public class UserReadDto
 public class UserCreateDto
 {
     public string FullName { get; set; }
+    [Required, EmailAddress]
+
     public string Email { get; set; }
     public string Password { get; set; }
     public string CountryCode { get; set; }
