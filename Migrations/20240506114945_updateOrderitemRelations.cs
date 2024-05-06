@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class dbinit : Migration
+    public partial class updateOrderitemRelations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,25 +58,11 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "order_item",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    order_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    stock_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    quantity = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_order_item", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "product",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    category_id = table.Column<int>(type: "integer", nullable: false),
+                    category_id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "text", nullable: false)
                 },
@@ -118,6 +104,31 @@ namespace Backend.Migrations
                     table.PrimaryKey("pk_user", x => x.id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "order_item",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    order_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    stock_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    quantity = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_order_item", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_order_item_order_order_id",
+                        column: x => x.order_id,
+                        principalTable: "order",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_order_item_order_id",
+                table: "order_item",
+                column: "order_id");
+
             migrationBuilder.CreateIndex(
                 name: "ix_user_email",
                 table: "user",
@@ -135,9 +146,6 @@ namespace Backend.Migrations
                 name: "category");
 
             migrationBuilder.DropTable(
-                name: "order");
-
-            migrationBuilder.DropTable(
                 name: "order_item");
 
             migrationBuilder.DropTable(
@@ -148,6 +156,9 @@ namespace Backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "user");
+
+            migrationBuilder.DropTable(
+                name: "order");
         }
     }
 }

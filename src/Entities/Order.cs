@@ -14,6 +14,7 @@ public class Order
     public int TotalAmount { get; set; }
     public string Status { get; set; }
     public string Payment { get; set; }
+    public IEnumerable<OrderItem> OrderItem { get; set; }
 
 
 

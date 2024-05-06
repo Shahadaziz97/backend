@@ -9,18 +9,23 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Services;
 
 public class OrderService : IOrderService
 {
+    private IOrderItemService _orderItemService;
 
     private IOrderRepository _orderRepository;
     private IMapper _mapper;
     private IStockService _stockService;
 
-    public OrderService(IOrderRepository orderRepository, IMapper mapper, IStockService stockService)
+
+    public OrderService(IOrderRepository orderRepository, IMapper mapper, IStockService stockService, IOrderItemService orderItemService)
     {
         _orderRepository = orderRepository;
         _mapper = mapper;
         _stockService = stockService;
+        _orderItemService = orderItemService;
+
 
     }
+
 
     public Order CreateOne(OrderCreateDTO newCreatOrder)
     {
@@ -40,8 +45,9 @@ public class OrderService : IOrderService
         // order.OrderDate = DateTime.Now;
         order.Payment = "False";
         order.Status = "processing";
+        order.TotalAmount = 300;
 
-        order = _orderRepository.CreateOne(order);
+        Console.WriteLine($"BEFORE LOOP");
 
         foreach (var item in checkedoutItems)
         {
@@ -49,19 +55,26 @@ public class OrderService : IOrderService
             IEnumerable<Stock>? stocks = _stockService.FindByProductId(item.ProductId);
 
             Stock? stock = stocks.FirstOrDefault(stock => stock.Color == item.Color && stock.Size == item.Size);
+            if (stock is null) { continue; };
 
             Console.WriteLine($"ORDER ID = {order.Id}");
 
-            // OrderItem OrderItem = new OrderItem();
-            // OrderItem.OrderId = order.Id;
-            // OrderItem.StockId = stock.Id;
-            // OrderItem.Quantity = item.Quantity;
+            OrderItem OrderItem = _mapper.Map<OrderItem>(item);
 
+            OrderItem.OrderId = order.Id;
+            OrderItem.StockId = stock.Id;
+            OrderItem.Quantity = item.Quantity;
+            Console.WriteLine($"BEFORE CREATE");
+
+            _orderItemService.CreateOne(OrderItem);
             // IEnumerable<OrderItem> orderItems = 
-
+            // save order item in order item database 
         }
 
+        _orderRepository.CreateOne(order);
 
+
+        // save order in order database 
         // _stockService.FindByProductId(newOrder);
 
     }
@@ -71,9 +84,10 @@ public class OrderService : IOrderService
     //     throw new NotImplementedException();
     // }
 
-    public IEnumerable<Order> FindAll()
+    public IEnumerable<OrderCreateDTO> FindAll()
     {
-        return _orderRepository.FindAll();
+        return _mapper.Map<IEnumerable<OrderCreateDTO>>(_orderRepository.FindAll());
+
     }
 
     public IEnumerable<Order> FindByUserId(Guid userId)

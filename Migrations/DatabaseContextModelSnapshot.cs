@@ -141,6 +141,9 @@ namespace Backend.Migrations
                     b.HasKey("Id")
                         .HasName("pk_order_item");
 
+                    b.HasIndex("OrderId")
+                        .HasDatabaseName("ix_order_item_order_id");
+
                     b.ToTable("order_item", (string)null);
                 });
 
@@ -231,8 +234,8 @@ namespace Backend.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid")
                         .HasColumnName("category_id");
 
                     b.Property<string>("Description")
@@ -249,6 +252,23 @@ namespace Backend.Migrations
                         .HasName("pk_product");
 
                     b.ToTable("product", (string)null);
+                });
+
+            modelBuilder.Entity("sda_onsite_2_csharp_backend_teamwork.src.Entities.OrderItem", b =>
+                {
+                    b.HasOne("sda_onsite_2_csharp_backend_teamwork.src.Entities.Order", "Order")
+                        .WithMany("OrderItem")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_order_item_order_order_id");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("sda_onsite_2_csharp_backend_teamwork.src.Entities.Order", b =>
+                {
+                    b.Navigation("OrderItem");
                 });
 #pragma warning restore 612, 618
         }
