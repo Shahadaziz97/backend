@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using sda_onsite_2_csharp_backend_teamwork.src.Enums;
 
 #nullable disable
 
@@ -11,6 +12,9 @@ namespace Backend.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("Npgsql:Enum:role", "customer,admin");
+
             migrationBuilder.CreateTable(
                 name: "address",
                 columns: table => new
@@ -111,7 +115,7 @@ namespace Backend.Migrations
                     password = table.Column<string>(type: "text", nullable: false),
                     country_code = table.Column<string>(type: "text", nullable: false),
                     phone = table.Column<string>(type: "text", nullable: false),
-                    role = table.Column<int>(type: "integer", nullable: false)
+                    role = table.Column<Role>(type: "role", nullable: false)
                 },
                 constraints: table =>
                 {
