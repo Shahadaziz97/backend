@@ -23,7 +23,22 @@ public class UserService : IUserService
         _mapper = mapper;
     }
 
-    public UserReadDto? CreateOne(UserCreateDto user)
+    public UserReadDto? SignIn(UserSignIn userSign)
+    {
+        User? user = _userRepository.FindOneByEmail(userSign.Email);
+        if(user is null) return null;
+
+        byte[] pepper = Encoding.UTF8.GetBytes(_config["Jwt:Pepper"]!);
+
+        bool isCorrectPass = PasswordUtils.VarifyPassword(userSign.Password, user.Password, pepper);
+        if(!isCorrectPass) return null;
+
+        UserReadDto userRead = _mapper.Map<UserReadDto>(user);
+        return userRead;
+
+    }
+
+    public UserReadDto? SignUp(UserCreateDto user)
     {
         User? foundUser = _userRepository.FindOneByEmail(user.Email);
 
@@ -31,13 +46,16 @@ public class UserService : IUserService
         {
             return null;
         }
+
         byte[] pepper = Encoding.UTF8.GetBytes(_config["Jwt:Pepper"]!);
 
         PasswordUtils.HashPassword(user.Password, out string hashedPassword, pepper);
 
         user.Password = hashedPassword;
         User mappedUser = _mapper.Map<User>(user);
+
         var newUser = _userRepository.CreateOne(mappedUser);
+        
         UserReadDto userRead = _mapper.Map<UserReadDto>(newUser);
 
         return userRead;
