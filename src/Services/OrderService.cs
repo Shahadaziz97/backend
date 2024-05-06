@@ -12,7 +12,7 @@ public class OrderService : IOrderService
 
     private IOrderRepository _orderRepository;
     private IMapper _mapper;
-    IStockService _stockService;
+    private IStockService _stockService;
 
     public OrderService(IOrderRepository orderRepository, IMapper mapper, IStockService stockService)
     {
@@ -37,14 +37,11 @@ public class OrderService : IOrderService
         Order order = new Order();
         order.AddressID = Guid.NewGuid();
         order.UserId = Guid.NewGuid();
-        order.OrderDate = DateTime.Now;
+        // order.OrderDate = DateTime.Now;
         order.Payment = "False";
         order.Status = "processing";
 
         order = _orderRepository.CreateOne(order);
-
-
-
 
         foreach (var item in checkedoutItems)
         {
@@ -55,7 +52,16 @@ public class OrderService : IOrderService
 
             Console.WriteLine($"ORDER ID = {order.Id}");
 
+            // OrderItem OrderItem = new OrderItem();
+            // OrderItem.OrderId = order.Id;
+            // OrderItem.StockId = stock.Id;
+            // OrderItem.Quantity = item.Quantity;
+
+            // IEnumerable<OrderItem> orderItems = 
+
         }
+
+
         // _stockService.FindByProductId(newOrder);
 
     }
