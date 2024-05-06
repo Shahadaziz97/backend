@@ -49,7 +49,7 @@ public class StockRepository : IStockRepository
 
     }
 
-    public bool DeletOneById(Guid id)
+    public bool DeleteOneById(Guid id)
     {
         Stock? stock = FindById(id);
         if (stock is null)
@@ -63,7 +63,7 @@ public class StockRepository : IStockRepository
             return true;
         }
     }
-    public bool DeletProductById(Guid productId)
+    public bool DeleteProductById(Guid productId)
     {
         IEnumerable<Stock> unwantedProduct = FindByProductId(productId);
         if (unwantedProduct is null)
