@@ -7,14 +7,13 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repository
 {
     public class ProductRepository : IProductRepository
     {
-
         private DbSet<Product> _products;
         private DatabaseContext _databaseContext;
+        
         public ProductRepository(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
             _products = _databaseContext.Product;
-
         }
 
 
