@@ -1,20 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
-using sda_onsite_2_csharp_backend_teamwork.src.DataBase;
+using sda_onsite_2_csharp_backend_teamwork.src.Databases;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.Repository
 {
     public class ProductRepository : IProductRepository
     {
-
         private DbSet<Product> _products;
         private DatabaseContext _databaseContext;
         public ProductRepository(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
             _products = _databaseContext.Product;
-
         }
 
 

@@ -1,4 +1,5 @@
 
+using Hanan_csharp_backend_teamwork.src.Entities;
 using Microsoft.EntityFrameworkCore;
 using sda_onsite_2_csharp_backend_teamwork.src.Entities;
 
@@ -11,8 +12,8 @@ public class DatabaseContext : DbContext
 
     public DbSet<Category> Category { get; set; }
     public DbSet<User> User { get; set; }
-    // public DbSet<Stock> Stock{ get; set;}
-    // public DbSet<Product> Product { get; set;}
+    public DbSet<Address> Address { get; set; }
+    public DbSet<Product> Product { get; set; }
     public DatabaseContext(IConfiguration config)
     {
         _config = config;
