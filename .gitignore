@@ -3,10 +3,6 @@
 bin
 obj
 *.http
-<<<<<<< HEAD
 
 .fake
 appsettings.json
-=======
-appsettings.json
->>>>>>> userEntity
