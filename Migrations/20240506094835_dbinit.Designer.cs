@@ -12,7 +12,7 @@ using sda_onsite_2_csharp_backend_teamwork.src.Databases;
 namespace Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240504160650_db-init")]
+    [Migration("20240506094835_dbinit")]
     partial class dbinit
     {
         /// <inheritdoc />
@@ -24,6 +24,46 @@ namespace Backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Hanan_csharp_backend_teamwork.src.Entities.Address", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("city");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("country");
+
+                    b.Property<int>("PostalCode")
+                        .HasColumnType("integer")
+                        .HasColumnName("postal_code");
+
+                    b.Property<string>("StreetName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("street_name");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<int>("ZipCode")
+                        .HasColumnType("integer")
+                        .HasColumnName("zip_code");
+
+                    b.HasKey("Id")
+                        .HasName("pk_address");
+
+                    b.ToTable("address", (string)null);
+                });
 
             modelBuilder.Entity("sda_onsite_2_csharp_backend_teamwork.src.Entities.Category", b =>
                 {
@@ -52,11 +92,11 @@ namespace Backend.Migrations
 
                     b.Property<Guid>("AddressID")
                         .HasColumnType("uuid")
-                        .HasColumnName("addressid");
+                        .HasColumnName("address_id");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("orderdate");
+                        .HasColumnName("order_date");
 
                     b.Property<string>("Payment")
                         .IsRequired()
@@ -70,16 +110,41 @@ namespace Backend.Migrations
 
                     b.Property<int>("TotalAmount")
                         .HasColumnType("integer")
-                        .HasColumnName("totalamount");
+                        .HasColumnName("total_amount");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
-                        .HasColumnName("userid");
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id")
                         .HasName("pk_order");
 
                     b.ToTable("order", (string)null);
+                });
+
+            modelBuilder.Entity("sda_onsite_2_csharp_backend_teamwork.src.Entities.OrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("order_id");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
+
+                    b.Property<Guid>("StockId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("stock_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_order_item");
+
+                    b.ToTable("order_item", (string)null);
                 });
 
             modelBuilder.Entity("sda_onsite_2_csharp_backend_teamwork.src.Entities.Stock", b =>
@@ -100,7 +165,7 @@ namespace Backend.Migrations
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid")
-                        .HasColumnName("productid");
+                        .HasColumnName("product_id");
 
                     b.Property<char>("Size")
                         .HasColumnType("character(1)")
@@ -108,7 +173,7 @@ namespace Backend.Migrations
 
                     b.Property<int>("StockQuantity")
                         .HasColumnType("integer")
-                        .HasColumnName("stockquantity");
+                        .HasColumnName("stock_quantity");
 
                     b.HasKey("Id")
                         .HasName("pk_stock");
@@ -126,7 +191,7 @@ namespace Backend.Migrations
                     b.Property<string>("CountryCode")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("countrycode");
+                        .HasColumnName("country_code");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -136,7 +201,7 @@ namespace Backend.Migrations
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("fullname");
+                        .HasColumnName("full_name");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -148,8 +213,16 @@ namespace Backend.Migrations
                         .HasColumnType("text")
                         .HasColumnName("phone");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("integer")
+                        .HasColumnName("role");
+
                     b.HasKey("Id")
                         .HasName("pk_user");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasDatabaseName("ix_user_email");
 
                     b.ToTable("user", (string)null);
                 });
@@ -163,7 +236,7 @@ namespace Backend.Migrations
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer")
-                        .HasColumnName("categoryid");
+                        .HasColumnName("category_id");
 
                     b.Property<string>("Description")
                         .IsRequired()
