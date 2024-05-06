@@ -9,17 +9,19 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repository
     {
         private DbSet<Product> _products;
         private DatabaseContext _databaseContext;
+        
         public ProductRepository(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
             _products = _databaseContext.Product;
-
         }
+
 
         public IEnumerable<Product> FindAll()
         {
             return _products;
         }
+
 
         public Product? FindeOne(Guid Id)
         {
@@ -29,13 +31,15 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repository
                 return product;
             }
             return null;
-        }
 
+        }
         public Product CreateOne(Product product)
         {
             _products.Add(product);
             _databaseContext.SaveChanges();
             return product;
         }
+
+
     }
 }

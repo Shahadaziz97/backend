@@ -18,10 +18,10 @@ public class StockService : IStockService
 
     }
 
-    public Stock CreateOne(StockCreatDto newCreatStock)
+    public Stock CreateOne(StockCreateDto newCreateStock)
     {
 
-        Stock newStock = _mapper.Map<Stock>(newCreatStock);
+        Stock newStock = _mapper.Map<Stock>(newCreateStock);
 
 
         return _stockRepository.CreateOne(newStock);
@@ -50,14 +50,14 @@ public class StockService : IStockService
 
     }
 
-    public bool DeletOneById(Guid id)
+    public bool DeleteOneById(Guid id)
     {
 
-        return _stockRepository.DeletOneById(id);
+        return _stockRepository.DeleteOneById(id);
     }
-    public bool DeletProductById(Guid productId)
+    public bool DeleteProductById(Guid productId)
     {
-        return _stockRepository.DeletProductById(productId);
+        return _stockRepository.DeleteProductById(productId);
     }
 
     // public IEnumerable<Stock> EditItem(int id)

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.DTOs
 {
-    public class StockCreatDto
+    public class StockCreateDto
     {
         public Guid ProductId { get; set; }
         public int StockQuantity { get; set; }

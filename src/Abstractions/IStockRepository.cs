@@ -8,8 +8,8 @@ public interface IStockRepository
     public IEnumerable<Stock> FindByProductId(Guid productId);
     public Stock? FindById(Guid id);
     public Stock CreateOne(Stock newProduct);
-    public bool DeletOneById(Guid id);
-    public bool DeletProductById(Guid productId);
+    public bool DeleteOneById(Guid id);
+    public bool DeleteProductById(Guid productId);
     // public IEnumerable<Stock> EditQuantity(int id);
     // public IEnumerable<Stock> EditeOne();
 
