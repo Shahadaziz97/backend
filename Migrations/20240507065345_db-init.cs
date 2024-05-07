@@ -76,6 +76,23 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "payments",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    payment_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
+                    payment_method = table.Column<string>(type: "text", nullable: false),
+                    transaction_id = table.Column<string>(type: "text", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_payments", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "product",
                 columns: table => new
                 {
@@ -143,6 +160,9 @@ namespace Backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "order_item");
+
+            migrationBuilder.DropTable(
+                name: "payments");
 
             migrationBuilder.DropTable(
                 name: "product");

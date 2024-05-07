@@ -1,9 +1,6 @@
-using AutoMapper;
 using Hanan_csharp_backend_teamwork.src.Abstractions;
 using Hanan_csharp_backend_teamwork.src.Repositories;
 using Hanan_csharp_backend_teamwork.src.Services;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Options;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
 using sda_onsite_2_csharp_backend_teamwork.src.Databases;
 using sda_onsite_2_csharp_backend_teamwork.src.Mappers;
@@ -48,6 +45,9 @@ builder.Services.AddScoped<IAddressRepoistory, AddressRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
+
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
 var app = builder.Build();
 app.MapControllers();
