@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
 using sda_onsite_2_csharp_backend_teamwork.src.Databases;
 using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
 using sda_onsite_2_csharp_backend_teamwork.src.Entities;
+using sda_onsite_2_csharp_backend_teamwork.src.Enums;
 using sda_onsite_2_csharp_backend_teamwork.src.Services;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.Controllers;
@@ -25,6 +27,8 @@ public class UserController : BaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
+
     public List<UserReadDto> FindAll()
     {
         return _userService.FindAll();
@@ -56,16 +60,16 @@ public class UserController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-    public ActionResult<UserReadDto> SignIn([FromBody] UserSignIn user)
+    public ActionResult<string> SignIn([FromBody] UserSignIn user)
     {
         if (user is not null)
         {
-            UserReadDto? userRead = _userService.SignIn(user);
-            if(userRead is null)
+            string token = _userService.SignIn(user);
+            if(token is null)
             {
               return BadRequest();
             }
-            return Ok(userRead);
+            return Ok(token);
         }
         return BadRequest();
 
