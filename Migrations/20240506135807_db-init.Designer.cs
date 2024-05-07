@@ -6,13 +6,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using sda_onsite_2_csharp_backend_teamwork.src.Databases;
+using sda_onsite_2_csharp_backend_teamwork.src.Enums;
 
 #nullable disable
 
 namespace Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240507064527_db-init")]
+    [Migration("20240506135807_db-init")]
     partial class dbinit
     {
         /// <inheritdoc />
@@ -23,6 +24,7 @@ namespace Backend.Migrations
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "role", new[] { "customer", "admin" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Hanan_csharp_backend_teamwork.src.Entities.Address", b =>
@@ -44,64 +46,25 @@ namespace Backend.Migrations
 
                     b.Property<int>("PostalCode")
                         .HasColumnType("integer")
-                        .HasColumnName("postalcode");
+                        .HasColumnName("postal_code");
 
                     b.Property<string>("StreetName")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("streetname");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("userid");
-
-                    b.Property<int>("ZipCode")
-                        .HasColumnType("integer")
-                        .HasColumnName("zipcode");
-
-                    b.HasKey("Id")
-                        .HasName("pk_address");
-
-                    b.ToTable("address", (string)null);
-                });
-
-            modelBuilder.Entity("Hanan_csharp_backend_teamwork.src.Entities.Payment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("numeric")
-                        .HasColumnName("amount");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("payment_date");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("payment_method");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
-                        .HasColumnName("status");
-
-                    b.Property<string>("TransactionId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("transaction_id");
+                        .HasColumnName("street_name");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
-                    b.HasKey("Id")
-                        .HasName("pk_payments");
+                    b.Property<int>("ZipCode")
+                        .HasColumnType("integer")
+                        .HasColumnName("zip_code");
 
-                    b.ToTable("payments", (string)null);
+                    b.HasKey("Id")
+                        .HasName("pk_address");
+
+                    b.ToTable("address", (string)null);
                 });
 
             modelBuilder.Entity("sda_onsite_2_csharp_backend_teamwork.src.Entities.Category", b =>
@@ -204,7 +167,7 @@ namespace Backend.Migrations
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid")
-                        .HasColumnName("productid");
+                        .HasColumnName("product_id");
 
                     b.Property<char>("Size")
                         .HasColumnType("character(1)")
@@ -212,7 +175,7 @@ namespace Backend.Migrations
 
                     b.Property<int>("StockQuantity")
                         .HasColumnType("integer")
-                        .HasColumnName("stockquantity");
+                        .HasColumnName("stock_quantity");
 
                     b.HasKey("Id")
                         .HasName("pk_stock");
@@ -230,7 +193,7 @@ namespace Backend.Migrations
                     b.Property<string>("CountryCode")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("countrycode");
+                        .HasColumnName("country_code");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -240,7 +203,7 @@ namespace Backend.Migrations
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("fullname");
+                        .HasColumnName("full_name");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -252,8 +215,16 @@ namespace Backend.Migrations
                         .HasColumnType("text")
                         .HasColumnName("phone");
 
+                    b.Property<Role>("Role")
+                        .HasColumnType("role")
+                        .HasColumnName("role");
+
                     b.HasKey("Id")
                         .HasName("pk_user");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasDatabaseName("ix_user_email");
 
                     b.ToTable("user", (string)null);
                 });
@@ -267,7 +238,7 @@ namespace Backend.Migrations
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer")
-                        .HasColumnName("categoryid");
+                        .HasColumnName("category_id");
 
                     b.Property<string>("Description")
                         .IsRequired()
