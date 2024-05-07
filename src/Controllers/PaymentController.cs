@@ -16,7 +16,7 @@ namespace Hanan_csharp_backend_teamwork.src.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Payment>> GetPaymentById(int id)
+        public async Task<ActionResult<Payment>> GetPaymentById(Guid id)
         {
             var payment = await _paymentService.GetPaymentByIdAsync(id);
             if (payment == null)
@@ -41,7 +41,7 @@ namespace Hanan_csharp_backend_teamwork.src.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePayment(int id, Payment payment)
+        public async Task<IActionResult> UpdatePayment(Guid id, Payment payment)
         {
             if (id != payment.Id)
             {
@@ -61,7 +61,7 @@ namespace Hanan_csharp_backend_teamwork.src.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePayment(int id)
+        public async Task<IActionResult> DeletePayment(Guid id)
         {
             await _paymentService.DeletePaymentAsync(id);
             return NoContent();

@@ -4,14 +4,13 @@ namespace Hanan_csharp_backend_teamwork.src.Entities
 {
     public class Payment
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         public PaymentStatus Status { get; set; }
         public string PaymentMethod { get; set; }
         public string TransactionId { get; set; }
-        public int UserId { get; set; }
-        public User User { get; set; } // Assuming a one-to-many relationship with User entity
+        public Guid UserId { get; set; }
     }
 
     public enum PaymentStatus

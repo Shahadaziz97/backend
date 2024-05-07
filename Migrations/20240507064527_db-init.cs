@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using sda_onsite_2_csharp_backend_teamwork.src.Enums;
 
 #nullable disable
 
@@ -12,17 +12,20 @@ namespace Backend.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("Npgsql:Enum:role", "customer,admin");
+
             migrationBuilder.CreateTable(
                 name: "address",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    userid = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     country = table.Column<string>(type: "text", nullable: false),
                     city = table.Column<string>(type: "text", nullable: false),
-                    streetname = table.Column<string>(type: "text", nullable: false),
-                    postalcode = table.Column<int>(type: "integer", nullable: false),
-                    zipcode = table.Column<int>(type: "integer", nullable: false)
+                    street_name = table.Column<string>(type: "text", nullable: false),
+                    postal_code = table.Column<int>(type: "integer", nullable: false),
+                    zip_code = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,10 +49,10 @@ namespace Backend.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    addressid = table.Column<Guid>(type: "uuid", nullable: false),
-                    userid = table.Column<Guid>(type: "uuid", nullable: false),
-                    orderdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    totalamount = table.Column<int>(type: "integer", nullable: false),
+                    address_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    order_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    total_amount = table.Column<int>(type: "integer", nullable: false),
                     status = table.Column<string>(type: "text", nullable: false),
                     payment = table.Column<string>(type: "text", nullable: false)
                 },
@@ -59,11 +62,42 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "order_item",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    order_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    stock_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    quantity = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_order_item", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "payments",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    payment_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
+                    payment_method = table.Column<string>(type: "text", nullable: false),
+                    transaction_id = table.Column<string>(type: "text", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_payments", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "product",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    categoryid = table.Column<int>(type: "integer", nullable: false),
+                    category_id = table.Column<int>(type: "integer", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "text", nullable: false)
                 },
@@ -77,8 +111,8 @@ namespace Backend.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    productid = table.Column<Guid>(type: "uuid", nullable: false),
-                    stockquantity = table.Column<int>(type: "integer", nullable: false),
+                    product_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    stock_quantity = table.Column<int>(type: "integer", nullable: false),
                     price = table.Column<int>(type: "integer", nullable: false),
                     color = table.Column<string>(type: "text", nullable: false),
                     size = table.Column<char>(type: "character(1)", nullable: false)
@@ -93,46 +127,23 @@ namespace Backend.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    fullname = table.Column<string>(type: "text", nullable: false),
+                    full_name = table.Column<string>(type: "text", nullable: false),
                     email = table.Column<string>(type: "text", nullable: false),
                     password = table.Column<string>(type: "text", nullable: false),
-                    countrycode = table.Column<string>(type: "text", nullable: false),
-                    phone = table.Column<string>(type: "text", nullable: false)
+                    country_code = table.Column<string>(type: "text", nullable: false),
+                    phone = table.Column<string>(type: "text", nullable: false),
+                    role = table.Column<Role>(type: "role", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_user", x => x.id);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "payments",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    amount = table.Column<decimal>(type: "numeric", nullable: false),
-                    paymentdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    status = table.Column<int>(type: "integer", nullable: false),
-                    paymentmethod = table.Column<string>(type: "text", nullable: false),
-                    transactionid = table.Column<string>(type: "text", nullable: false),
-                    userid = table.Column<int>(type: "integer", nullable: false),
-                    userid1 = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_payments", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_payments_user_userid1",
-                        column: x => x.userid1,
-                        principalTable: "user",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
-                name: "ix_payments_userid1",
-                table: "payments",
-                column: "userid1");
+                name: "ix_user_email",
+                table: "user",
+                column: "email",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -146,6 +157,9 @@ namespace Backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "order");
+
+            migrationBuilder.DropTable(
+                name: "order_item");
 
             migrationBuilder.DropTable(
                 name: "payments");

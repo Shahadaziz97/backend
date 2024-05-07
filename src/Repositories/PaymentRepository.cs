@@ -17,7 +17,7 @@ namespace Hanan_csharp_backend_teamwork.src.Repositories
             _payment = _context.Payments;
         }
 
-        public async Task<Payment> GetByIdAsync(int id)
+        public async Task<Payment> GetByIdAsync(Guid id)
         {
             return await _context.Payments.FindAsync(id);
         }
@@ -39,7 +39,7 @@ namespace Hanan_csharp_backend_teamwork.src.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var payment = await GetByIdAsync(id);
             if (payment != null)

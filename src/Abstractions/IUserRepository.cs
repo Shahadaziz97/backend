@@ -9,9 +9,5 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Abstractions
         public User? FindOneByEmail(string email);
         public User UpdateOne(User updateUser);
 
-        //public IEnumerable<User> DeleteUsersById(Guid id);
-
-        // public User? FindOneById(string Id);
-
     }
 }

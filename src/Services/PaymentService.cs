@@ -13,7 +13,7 @@ namespace Hanan_csharp_backend_teamwork.src.Services
             _paymentRepository = paymentRepository;
         }
 
-        public async Task<Payment> GetPaymentByIdAsync(int id)
+        public async Task<Payment> GetPaymentByIdAsync(Guid id)
         {
             return await _paymentRepository.GetByIdAsync(id);
         }
@@ -28,7 +28,7 @@ namespace Hanan_csharp_backend_teamwork.src.Services
             await _paymentRepository.AddAsync(payment);
         }
 
-        public async Task UpdatePaymentAsync(int id, Payment payment)
+        public async Task UpdatePaymentAsync(Guid id, Payment payment)
         {
             var existingPayment = await _paymentRepository.GetByIdAsync(id);
             if (existingPayment == null)
@@ -46,7 +46,7 @@ namespace Hanan_csharp_backend_teamwork.src.Services
             await _paymentRepository.UpdateAsync(existingPayment);
         }
 
-        public async Task DeletePaymentAsync(int id)
+        public async Task DeletePaymentAsync(Guid id)
         {
             await _paymentRepository.DeleteAsync(id);
         }

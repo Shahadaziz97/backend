@@ -37,16 +37,35 @@ public class UserController : BaseController
         return Ok(_userService.FindOneByEmail(email));
     }
 
-    [HttpPost]
+    [HttpPost("signup")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-    public ActionResult<UserReadDto> CreateOne([FromBody] UserCreateDto user)
+    public ActionResult<UserReadDto> SignUp([FromBody] UserCreateDto user)
     {
         if (user is not null)
         {
-            var createdUser = _userService.CreateOne(user);
-            return CreatedAtAction(nameof(CreateOne), createdUser);
+            var createdUser = _userService.SignUp(user);
+            return CreatedAtAction(nameof(SignUp), createdUser);
+        }
+        return BadRequest();
+
+    }
+
+    [HttpPost("login")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+    public ActionResult<UserReadDto> SignIn([FromBody] UserSignIn user)
+    {
+        if (user is not null)
+        {
+            UserReadDto? userRead = _userService.SignIn(user);
+            if(userRead is null)
+            {
+              return BadRequest();
+            }
+            return Ok(userRead);
         }
         return BadRequest();
 
