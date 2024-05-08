@@ -9,7 +9,7 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repository
     {
         private DbSet<Product> _products;
         private DatabaseContext _databaseContext;
-        
+
         public ProductRepository(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
@@ -17,9 +17,13 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repository
         }
 
 
-        public IEnumerable<Product> FindAll()
+        public IEnumerable<Product> FindAll(int limit, int offset)
         {
-            return _products;
+            if (limit == 0 && offset == 0)
+            {
+                return _products;
+            }
+            return _products.Skip(offset).Take(limit);
         }
 
 

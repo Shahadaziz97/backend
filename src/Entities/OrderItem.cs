@@ -8,5 +8,9 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Entities
         public Order Order { get; set; }
         public Guid StockId { get; set; }
         public int Quantity { get; set; }
+        // public IEnumerable<Stock> Stocks { get; set; }
+        // public IEnumerable<Order> Orders { get; set; }
+
+
     }
 }

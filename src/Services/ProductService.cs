@@ -15,9 +15,10 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.services
             _ProductRepository = productRepository;
             _mapper = mapper;
         }
-        public IEnumerable<Product> FindAll()
+        public IEnumerable<ProductReadDTO> FindAll(int limit, int offset)
         {
-            return _ProductRepository.FindAll();
+            IEnumerable<Product> products = _ProductRepository.FindAll(limit, offset);
+            return products.Select(_mapper.Map<ProductReadDTO>);
         }
         public Product? FindeOne(Guid Id)
         {
@@ -25,7 +26,7 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.services
             return _ProductRepository.FindeOne(Id);
 
         }
-        public Product CreateOne(PoductReadDTO product)
+        public Product CreateOne(ProductReadDTO product)
         {
             Product creatProduct = _mapper.Map<Product>(product);
             return _ProductRepository.CreateOne(creatProduct);

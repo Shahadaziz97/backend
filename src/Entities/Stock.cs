@@ -9,6 +9,10 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Entities
         public int Price { get; set; }
         public string Color { get; set; }
         public char Size { get; set; }
+        // public IEnumerable<Product> Products { get; set; }
+        public IEnumerable<OrderItem> OrderItems { get; set; }
+
+
 
 
 

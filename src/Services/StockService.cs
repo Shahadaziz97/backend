@@ -60,8 +60,8 @@ public class StockService : IStockService
         return _stockRepository.DeleteProductById(productId);
     }
 
-    // public IEnumerable<Stock> EditItem(int id)
-    // {
-    //     throw new NotImplementedException();
-    // }
+    public Stock UpdateOne(Stock stock)
+    {
+        return _stockRepository.UpdateOne(stock);
+    }
 }

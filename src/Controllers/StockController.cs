@@ -26,6 +26,9 @@ public class StockController : BaseController
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+
     public ActionResult<Stock> CreateOne(StockCreateDto newStock)
     {
         if (newStock is null)
@@ -42,6 +45,8 @@ public class StockController : BaseController
 
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
 
     public ActionResult<IEnumerable<Stock>> FindByProductId(Guid productId)
     {
@@ -58,6 +63,8 @@ public class StockController : BaseController
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
 
     public ActionResult<Stock> FindById(Guid id)
     {
@@ -67,11 +74,13 @@ public class StockController : BaseController
         {
             return NotFound();
         }
-        return stock;
+        return Ok(stock);
     }
 
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
 
     public ActionResult DeleteOneById(Guid id)
     {
@@ -82,6 +91,8 @@ public class StockController : BaseController
 
     [HttpDelete("products/{productId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
 
     public ActionResult DeleteProductById(Guid productId)
     {

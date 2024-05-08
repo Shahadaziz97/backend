@@ -15,26 +15,35 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Product> FindAll()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<Product>> FindAll([FromQuery(Name = "limit")] int limit, [FromQuery(Name = "offset")] int offset)
         {
-            return _productSarvice.FindAll();
+            return Ok(_productSarvice.FindAll(limit, offset));
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+
         public ActionResult<Product> FindeOne(Guid id)
         {
             Product? findId = _productSarvice.FindeOne(id);
             if (findId is null) return NotFound();
-            return findId;
+            return Ok(findId);
 
         }
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public ActionResult<Product> CreateOne([FromBody] PoductReadDTO product)
+
+
+        public ActionResult<Product> CreateOne([FromBody] ProductReadDTO newProduct)
         {
-            if (product is not null)
+            if (newProduct is not null)
             {
-                _productSarvice.CreateOne(product);
+                var product = _productSarvice.CreateOne(newProduct);
                 return CreatedAtAction(nameof(CreateOne), product);
             }
             return BadRequest();

@@ -24,7 +24,7 @@ namespace Hanan_csharp_backend_teamwork.src.Repositories
 
         public Address? FindOne(Guid id)
         {
-            return _addresses.FirstOrDefault(item => item.Id == id);
+            return _addresses.FirstOrDefault(item => item.UserId == id);
         }
 
         public bool DeleteById(Guid id)
