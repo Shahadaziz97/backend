@@ -1,8 +1,11 @@
 
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
 using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
 using sda_onsite_2_csharp_backend_teamwork.src.Entities;
+using sda_onsite_2_csharp_backend_teamwork.src.Enums;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.Controllers;
 
@@ -18,11 +21,9 @@ public class OrderController : BaseController
     }
 
     [HttpGet]
-
-    public IEnumerable<Order> FindAll()
+    public IEnumerable<OrderCreateDTO> FindAll()
     {
         return _orderService.FindAll();
-
     }
 
     [HttpPost]
@@ -37,12 +38,15 @@ public class OrderController : BaseController
         _orderService.CreateOne(newOrder);
         return CreatedAtAction(nameof(CreateOne), newOrder);
     }
-
+    [Authorize(Roles = "Admin,Customer")]
     [HttpPost("checkout")]
     public ActionResult Checkout(List<CheckoutDto> newOrder)
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        Console.WriteLine($"USER ID = {userId}");
 
-        _orderService.Checkout(newOrder);
+
+        _orderService.Checkout(newOrder, userId);
 
 
         /*

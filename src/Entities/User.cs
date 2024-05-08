@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Hanan_csharp_backend_teamwork.src.Entities;
 using Microsoft.EntityFrameworkCore;
 using sda_onsite_2_csharp_backend_teamwork.src.Enums;
 
@@ -18,5 +19,9 @@ public class User
     public string CountryCode { get; set; }
     public string Phone { get; set; }
     [Required]
-     public Role Role { get; set; } = Role.Customer;
+    public Role Role { get; set; } = Role.Customer;
+
+    public IEnumerable<Address> Addresses { get; set; }
+    public IEnumerable<Order> Orders { get; set; }
+
 }

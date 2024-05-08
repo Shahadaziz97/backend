@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
 using sda_onsite_2_csharp_backend_teamwork.src.Databases;
-using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
 using sda_onsite_2_csharp_backend_teamwork.src.Entities;
 
 namespace sda_onsite_2_csharp_backend_teamwork.src.Repositories;
@@ -46,9 +45,7 @@ public class StockRepository : IStockRepository
     {
         // 
         return _stock.FirstOrDefault(item => item.Id == id);
-
     }
-
     public bool DeleteOneById(Guid id)
     {
         Stock? stock = FindById(id);
@@ -72,18 +69,18 @@ public class StockRepository : IStockRepository
         }
         else
         {
-            foreach (var item in unwantedProduct)
-            {
-                _stock.Remove(item);
-                _databaseContext.SaveChanges();
-            }
+            _stock.RemoveRange(unwantedProduct);
+            _databaseContext.SaveChanges();
+
             return true;
         }
 
     }
+    public Stock UpdateOne(Stock stock)
+    {
+        _stock.Update(stock);
+        _databaseContext.SaveChanges();
 
-    // public IEnumerable<Stock> EditItem(int id)
-    // {
-    //     throw new NotImplementedException();
-    // }
+        return stock;
+    }
 }

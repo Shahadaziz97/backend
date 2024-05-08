@@ -19,23 +19,22 @@ namespace Hanan_csharp_backend_teamwork.src.Repositories
 
         public async Task<Payment> GetByIdAsync(Guid id)
         {
-            return await _context.Payments.FindAsync(id);
+            return await _payment.FindAsync(id);
         }
-
         public async Task<IEnumerable<Payment>> GetAllAsync()
         {
-            return await _context.Payments.ToListAsync();
+            return await _payment.ToListAsync();
         }
 
         public async Task AddAsync(Payment payment)
         {
-            await _context.Payments.AddAsync(payment);
+            await _payment.AddAsync(payment);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Payment payment)
         {
-            _context.Payments.Update(payment);
+            _payment.Update(payment);
             await _context.SaveChangesAsync();
         }
 
@@ -44,7 +43,7 @@ namespace Hanan_csharp_backend_teamwork.src.Repositories
             var payment = await GetByIdAsync(id);
             if (payment != null)
             {
-                _context.Payments.Remove(payment);
+                _payment.Remove(payment);
                 await _context.SaveChangesAsync();
             }
         }

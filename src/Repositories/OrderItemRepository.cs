@@ -28,6 +28,8 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Repositories
 
         public OrderItem CreateOne(OrderItem orderItem)
         {
+            Console.WriteLine($"INSITE CREATE");
+
             _orderItems.Add(orderItem);
             _databaseContext.SaveChanges();
             return orderItem;

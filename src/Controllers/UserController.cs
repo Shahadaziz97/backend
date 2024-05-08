@@ -44,6 +44,7 @@ public class UserController : BaseController
     [HttpPost("signup")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
     public ActionResult<UserReadDto> SignUp([FromBody] UserCreateDto user)
     {
@@ -65,9 +66,9 @@ public class UserController : BaseController
         if (user is not null)
         {
             string token = _userService.SignIn(user);
-            if(token is null)
+            if (token is null)
             {
-              return BadRequest();
+                return BadRequest();
             }
             return Ok(token);
         }

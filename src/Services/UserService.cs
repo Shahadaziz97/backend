@@ -29,19 +29,20 @@ public class UserService : IUserService
     public string SignIn(UserSignIn userSign)
     {
         User? user = _userRepository.FindOneByEmail(userSign.Email);
-        if(user is null) return null;
+        if (user is null) return null;
 
         byte[] pepper = Encoding.UTF8.GetBytes(_config["Jwt:Pepper"]!);
 
         bool isCorrectPass = PasswordUtils.VarifyPassword(userSign.Password, user.Password, pepper);
-        if(!isCorrectPass) return null;
+        if (!isCorrectPass) return null;
 
 
         var claims = new[]
              {
             new Claim(ClaimTypes.Name, user.FullName),
             new Claim(ClaimTypes.Role, user.Role.ToString()),
-            new Claim(ClaimTypes.Email, user.Email)
+            new Claim(ClaimTypes.Email, user.Email),
+             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
         };
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SigningKey"]!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -80,7 +81,7 @@ public class UserService : IUserService
         User mappedUser = _mapper.Map<User>(user);
 
         var newUser = _userRepository.CreateOne(mappedUser);
-        
+
         UserReadDto userRead = _mapper.Map<UserReadDto>(newUser);
 
         return userRead;

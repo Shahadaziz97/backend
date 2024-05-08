@@ -1,4 +1,6 @@
 using AutoMapper;
+using Hanan_csharp_backend_teamwork.src.DTOs;
+using Hanan_csharp_backend_teamwork.src.Entities;
 using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
 using sda_onsite_2_csharp_backend_teamwork.src.Entities;
 
@@ -14,12 +16,26 @@ namespace sda_onsite_2_csharp_backend_teamwork.src.Mappers
             CreateMap<Order, OrderCreateDTO>();
             CreateMap<OrderCreateDTO, Order>();
 
-            CreateMap<Product, PoductReadDTO>();
-            CreateMap<PoductReadDTO, Product>();
+            CreateMap<CheckoutDto, Order>();
+            CreateMap<CheckoutDto, OrderItem>();
+            CreateMap<CheckoutDto, OrderCreateDTO>();
+            CreateMap<OrderCreateDTO, Order>();
+            CreateMap<OrderCreateDTO, OrderItem>();
+            CreateMap<OrderCreateDTO, CheckoutDto>();
+            CreateMap<OrderItem, CheckoutDto>();
+            CreateMap<OrderItem, OrderCreateDTO>();
+            CreateMap<OrderItem, Order>();
+            CreateMap<Order, CheckoutDto>();
+            CreateMap<Order, CheckoutDto>();
+            CreateMap<Order, CheckoutDto>();
+
+            CreateMap<Product, ProductReadDTO>();
+            CreateMap<ProductReadDTO, Product>();
 
             CreateMap<User, UserReadDto>();
             CreateMap<UserReadDto, User>();
             CreateMap<UserCreateDto, User>();
+            CreateMap<AddressDTO, Address>();
 
             CreateMap<CategoryCreateDto, Category>();
             CreateMap<Category, CategoryCreateDto>();

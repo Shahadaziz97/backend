@@ -15,6 +15,8 @@ public interface IStockService
     public Stock CreateOne(StockCreateDto newProduct);
     public bool DeleteOneById(Guid id);
     public bool DeleteProductById(Guid productId);
+    public Stock UpdateOne(Stock stock);
+
     // public IEnumerable<Stock> EditQuantity(int id);
     // public IEnumerable<Stock> EditeOne();
 
