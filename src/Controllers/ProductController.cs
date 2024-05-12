@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
 using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
@@ -14,6 +15,7 @@ public class ProductController : BaseController
     }
 
     [HttpGet]
+
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<ProductDTO>> FindAll([FromQuery(Name = "limit")] int limit, [FromQuery(Name = "offset")] int offset)
     {
@@ -32,6 +34,7 @@ public class ProductController : BaseController
 
     }
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<ProductDTO> CreateOne([FromBody] ProductReadDTO newProduct)

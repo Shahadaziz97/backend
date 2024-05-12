@@ -16,6 +16,8 @@ public class OrderController : BaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
+
     public IEnumerable<OrderCreateDTO> FindAll()
     {
         return _orderService.FindAll();
@@ -73,7 +75,9 @@ public class OrderController : BaseController
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+
     public ActionResult DeleteOneById(Guid id)
     {
         _orderService.DeleteOneById(id);
@@ -81,6 +85,7 @@ public class OrderController : BaseController
     }
 
     [HttpDelete("orders/{userId}")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public ActionResult DeleteOrderByUserId(Guid userId)
     {

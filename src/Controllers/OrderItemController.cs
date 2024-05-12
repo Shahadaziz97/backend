@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
 using sda_onsite_2_csharp_backend_teamwork.src.Entities;
@@ -13,6 +14,8 @@ public class OrderItemController : BaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
+
     public IEnumerable<OrderItem> FindAll()
     {
         return _orderItemService.FindAll();

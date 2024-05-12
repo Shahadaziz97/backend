@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
 using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
@@ -20,6 +21,8 @@ public class CategoryController : BaseController
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
+
     public CategoryReadDto CreateOne([FromBody] CategoryCreateDto category)
     {
         return _categoryService.CreateOne(category);

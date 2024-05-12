@@ -28,6 +28,7 @@ public class UserController : BaseController
     }
 
     [HttpGet("{email}")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<UserReadDto?> FindOne(string email)
     {

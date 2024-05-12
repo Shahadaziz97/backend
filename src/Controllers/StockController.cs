@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using sda_onsite_2_csharp_backend_teamwork.src.Abstractions;
 using sda_onsite_2_csharp_backend_teamwork.src.DTOs;
@@ -19,6 +20,7 @@ public class StockController : BaseController
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<Stock> CreateOne(StockCreateDto newStock)
@@ -60,6 +62,8 @@ public class StockController : BaseController
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
+
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public ActionResult DeleteOneById(Guid id)
     {
@@ -68,6 +72,8 @@ public class StockController : BaseController
     }
 
     [HttpDelete("products/{productId}")]
+    [Authorize(Roles = "Admin")]
+
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public ActionResult DeleteProductById(Guid productId)
     {
