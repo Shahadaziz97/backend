@@ -16,6 +16,5 @@ public interface IOrderService
     public bool DeleteOneById(Guid id);
     public bool DeleteOrderByUserId(Guid userId);
     public void Checkout(List<CheckoutDto> newOrder, string userId);
-    // public IEnumerable<Stock> EditQuantity(int id);
-    // public IEnumerable<Stock> EditeOne();
+
 }

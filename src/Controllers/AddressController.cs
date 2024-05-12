@@ -37,7 +37,7 @@ namespace Hanan_csharp_backend_teamwork.src.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Address> FindAll()
+        public IEnumerable<AddressDTO> FindAll()
         {
             return _addressService.FindAll();
         }

@@ -27,9 +27,10 @@ namespace Hanan_csharp_backend_teamwork.src.Services
         }
 
 
-        public IEnumerable<Address> FindAll()
+        public IEnumerable<AddressDTO> FindAll()
         {
-            return _addressRepoistory.FindAll();
+            var addresses = _mapper.Map<IEnumerable<AddressDTO>>(_addressRepoistory.FindAll());
+            return addresses;
         }
 
         public Address? FindOne(Guid id)

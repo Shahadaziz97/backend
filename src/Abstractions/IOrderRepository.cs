@@ -14,8 +14,7 @@ public interface IOrderRepository
     public Order CreateOne(Order newOrder);
     public void DeleteOneById(Order id);
     public void DeleteOrderByUserId(Guid userId);
-    // public IEnumerable<Stock> EditQuantity(int id);
-    // public IEnumerable<Stock> EditeOne();
+   
 
 
 
