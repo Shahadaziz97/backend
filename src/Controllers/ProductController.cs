@@ -17,9 +17,9 @@ public class ProductController : BaseController
     [HttpGet]
 
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<IEnumerable<ProductDTO>> FindAll([FromQuery(Name = "limit")] int limit, [FromQuery(Name = "offset")] int offset)
+    public ActionResult<IEnumerable<ProductDTO>> FindAll([FromQuery(Name = "categoryId")] string? categoryId, [FromQuery(Name = "limit")] int limit, [FromQuery(Name = "offset")] int offset, [FromQuery(Name = "searchBy")] string? searchBy)
     {
-        return Ok(_productSarvice.FindAll(limit, offset));
+        return Ok(_productSarvice.FindAll(limit, offset, categoryId, searchBy));
     }
 
     [HttpGet("{id}")]
@@ -34,7 +34,7 @@ public class ProductController : BaseController
 
     }
     [HttpPost]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<ProductDTO> CreateOne([FromBody] ProductReadDTO newProduct)

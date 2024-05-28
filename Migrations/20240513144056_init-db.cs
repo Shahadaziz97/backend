@@ -7,7 +7,7 @@ using sda_onsite_2_csharp_backend_teamwork.src.Enums;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class dbinit : Migration
+    public partial class initdb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,23 +26,6 @@ namespace Backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_category", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "payments",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    amount = table.Column<int>(type: "integer", nullable: false),
-                    payment_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    status = table.Column<int>(type: "integer", nullable: false),
-                    payment_method = table.Column<string>(type: "text", nullable: false),
-                    transaction_id = table.Column<string>(type: "text", nullable: false),
-                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_payments", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -136,8 +119,7 @@ namespace Backend.Migrations
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     order_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     total_amount = table.Column<int>(type: "integer", nullable: false),
-                    status = table.Column<Status>(type: "status", nullable: false),
-                    payment_id = table.Column<Guid>(type: "uuid", nullable: false)
+                    status = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -229,9 +211,6 @@ namespace Backend.Migrations
         {
             migrationBuilder.DropTable(
                 name: "order_item");
-
-            migrationBuilder.DropTable(
-                name: "payments");
 
             migrationBuilder.DropTable(
                 name: "order");

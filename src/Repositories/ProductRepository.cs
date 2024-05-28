@@ -12,8 +12,14 @@ public class ProductRepository : IProductRepository
         _databaseContext = databaseContext;
         _products = _databaseContext.Product;
     }
-    public IEnumerable<Product> FindAll(int limit, int offset)
+    public IEnumerable<Product> FindAll(int limit, int offset, string categoryId)
     {
+        Console.WriteLine($"categoryId {categoryId}");
+
+        if (categoryId is not null)
+        {
+            return _products.Where(product => product.CategoryId == new Guid(categoryId));
+        }
         if (limit == 0 && offset == 0)
         {
             return _products;

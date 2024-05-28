@@ -12,9 +12,13 @@ public class ProductService : IProductService
         _ProductRepository = productRepository;
         _mapper = mapper;
     }
-    public IEnumerable<ProductDTO> FindAll(int limit, int offset)
+    public IEnumerable<ProductDTO> FindAll(int limit, int offset, string categoryId, string? searchBy)
     {
-        IEnumerable<Product> products = _ProductRepository.FindAll(limit, offset);
+        IEnumerable<Product> products = _ProductRepository.FindAll(limit, offset, categoryId);
+        if (searchBy is not null)
+        {
+            return products.Where(p => p.Name.ToLower().Contains(searchBy.ToLower())).Select(_mapper.Map<ProductDTO>);
+        }
         return products.Select(_mapper.Map<ProductDTO>);
     }
     public ProductDTO? FindeOne(Guid Id)
